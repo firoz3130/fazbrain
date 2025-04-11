@@ -28,7 +28,7 @@ export default function CreateTodoForm({ onAdd, showNotification }: Props) {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...formData }),
             });
-
+            console.log('res', res);
             if (!res.ok) throw new Error('Failed to create todo');
 
             const newTodo = await res.json();
@@ -42,10 +42,17 @@ export default function CreateTodoForm({ onAdd, showNotification }: Props) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white p-4 rounded-lg shadow mb-6 grid grid-cols-1 gap-4">
+        <form onSubmit={handleSubmit} className="bg-white-600 p-4 rounded-lg shadow mb-6 grid grid-cols-1 gap-4 text-black">
             <input name="task" value={formData.task} onChange={handleChange} placeholder="Task name" className="input" required />
-            <input name="category" value={formData.category} onChange={handleChange} placeholder="Category" className="input" required />
-            <input name="dueTime" type="datetime-local" value={formData.dueTime} onChange={handleChange} className="input" required />
+            <select name="category" value={formData.category} onChange={handleChange} className='input'>
+                <option value="" disabled>Select Category</option>
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Fitness">Fitness</option>
+                <option value="Other">Other</option>
+            </select>
+            <input name="dueTime" type="number" value={formData.dueTime} onChange={handleChange} className="input" required />
             <select name="priority" value={formData.priority} onChange={handleChange} className="input">
                 <option>Low</option>
                 <option>Medium</option>
